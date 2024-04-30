@@ -16,12 +16,7 @@ function DnD(canvas, interactor) {
     var pos = getMousePosition(canvas, event)
     this.initX = pos.x
     this.initY = pos.y
-
-    console.log("Click détecté : ")
-    console.log("Position de la souris : " , {
-      "x" : this.initX,
-      "y" : this.initY
-    } )
+    interactor.onInteractionStart(this)
 
   }.bind(this)
 
@@ -31,17 +26,14 @@ function DnD(canvas, interactor) {
       var pos = getMousePosition(canvas, event)
       this.finalX = pos.x
       this.finalY = pos.y
-      console.log("Position de la souris : " , {
-        "x" : this.finalX,
-        "y" : this.finalY
-      } )
+      interactor.onInteractionUpdate(this)
     }
     
   }.bind(this)
 
   this.onMouseRelease = function(event){
     this.clicked = false
-    console.log("Souris relachée : ", event)
+    interactor.onInteractionEnd(this)
   }.bind(this)
 
 	// Associer les fonctions précédentes aux évènements du canvas.
@@ -60,6 +52,9 @@ function getMousePosition(canvas, evt) {
     y: evt.clientY - rect.top
   };
 };
+
+
+
 
 
 
